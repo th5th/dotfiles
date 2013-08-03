@@ -9,7 +9,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 xbindkeys # bind audio junk
-# xmodmap -e 'clear Lock' -e 'keycode 66 = Escape NoSymbol Caps_Lock' # fuck caps lock - FIXME
+setxkbmap -option caps:swapescape # switch caps and escape
 xbacklight -set 50 # backlight default
 xset r rate 300 30 # Set key delay (300ms) and rate (30 per sec??
 
