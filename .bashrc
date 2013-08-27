@@ -10,6 +10,7 @@ export EDITOR="vim"
 # basic timesavers
 cl() { cd "$@"; ls; }
 mkcd() { mkdir "$@"; cd "$1"; }
+alias back='cl "$OLDPWD"'
 
 # Pacman aliases. command returns zero if pacman exists.
 if [ ! $(command -v pacman > /dev/null) ]; then

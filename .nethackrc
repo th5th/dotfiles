@@ -1,1 +1,1 @@
-OPTIONS=boulder:0,color,time,catname:Slinky,dogname:Pooch,horsename:Steve,pickup_types:$
+OPTIONS=boulder:0,color,pushweapon,showexp,time,catname:Slinky,dogname:Pooch,horsename:Steve,pickup_types:$
