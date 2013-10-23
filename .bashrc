@@ -8,12 +8,19 @@ export PATH="${HOME}/bin:${PATH}"
 export EDITOR="vim"
 
 # basic timesavers
-cl() { cd "$@"; ls; }
-mkcd() { mkdir "$@"; cd "$1"; }
-alias back='cl "$OLDPWD"'
+cl() { cd $1; shift; ls "$@"; }
+mkcl() { mkdir "$@"; cl "$1"; }
+back() { cl "$OLDPWD" "$@"; }
+mvcl() { mv "$@"; _dest=${!#}; if [ -d "$_dest" ]; then cl "$_dest"; else ls; fi; }
+
+# Control backlight brightness from bash to avoid fumbling for F keys
+if command -v xbacklight > /dev/null; then
+    alias blup="xbacklight -inc 10"
+    alias bldown="xbacklight -dec 10"
+fi
 
 # Pacman aliases. command returns zero if pacman exists.
-if [ ! $(command -v pacman > /dev/null) ]; then
+if command -v pacman > /dev/null; then
     alias pac="sudo pacman -S"     # install one or more packages
     alias pacu="sudo pacman -Syu"  # [u]pgrade all packages
     alias pacr="sudo pacman -Rs"   # [r]emove one or more packages
