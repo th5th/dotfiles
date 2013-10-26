@@ -9,9 +9,10 @@ export EDITOR="vim"
 
 # basic timesavers
 cl() { cd $1; shift; ls "$@"; }
-mkcl() { mkdir "$@"; cl "$1"; }
+mkcl() { mkdir "$@" && cl "$1"; }
 back() { cl "$OLDPWD" "$@"; }
 mvcl() { mv "$@"; _dest=${!#}; if [ -d "$_dest" ]; then cl "$_dest"; else ls; fi; }
+psgr() { ps ax | awk -vcommand="$1" 'NR == 1 || $5 ~ command'; }
 
 # Control backlight brightness from bash to avoid fumbling for F keys
 if command -v xbacklight > /dev/null; then
@@ -19,7 +20,7 @@ if command -v xbacklight > /dev/null; then
     alias bldown="xbacklight -dec 10"
 fi
 
-# Pacman aliases. command returns zero if pacman exists.
+# Pacman aliases.
 if command -v pacman > /dev/null; then
     alias pac="sudo pacman -S"     # install one or more packages
     alias pacu="sudo pacman -Syu"  # [u]pgrade all packages
@@ -38,6 +39,21 @@ if command -v pacman > /dev/null; then
 
     # which packages [req]uire this package
     pacreq() { pacman -Qii "$@" | awk -F ": " '/Required By/ { print $2}'; }
+
+    pacdiff()
+    {
+        if [[ -z $1 ]]; then
+            echo "Missing operand. Provide a file to compare"
+            return 1
+        fi
+
+        if [[ -e $1 ]] && [[ -e $1.pacnew ]]; then
+            vimdiff $1 $1.pacnew
+        else
+            echo "No pacnew file found."
+            return 1
+        fi
+    }
 fi
 
 alias ncst="sudo netctl switch-to"
