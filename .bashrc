@@ -14,6 +14,10 @@ back() { cl "$OLDPWD" "$@"; }
 mvcl() { mv "$@"; _dest=${!#}; if [ -d "$_dest" ]; then cl "$_dest"; else ls; fi; }
 psgr() { ps ax | awk -vcommand="$1" 'NR == 1 || $5 ~ command'; }
 
+if command -v markdown > /dev/null; then
+    md() { markdown "$1" > "${1%.*}.html"; }
+fi
+
 # Control backlight brightness from bash to avoid fumbling for F keys
 if command -v xbacklight > /dev/null; then
     alias blup="xbacklight -inc 10"
