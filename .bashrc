@@ -8,7 +8,7 @@ export PATH="${HOME}/bin:${PATH}"
 export EDITOR="vim"
 
 # basic timesavers
-cl() { cd $1; shift; ls "$@"; }
+cl() { cd "$1"; shift; ls "$@"; }
 mkcl() { mkdir "$@" && cl "$1"; }
 back() { cl "$OLDPWD" "$@"; }
 mvcl() { mv "$@"; _dest=${!#}; if [ -d "$_dest" ]; then cl "$_dest"; else ls; fi; }
