@@ -14,6 +14,13 @@ back() { cl "$OLDPWD" "$@"; }
 mvcl() { mv "$@"; _dest=${!#}; if [ -d "$_dest" ]; then cl "$_dest"; else ls; fi; }
 psgr() { ps ax | awk -vcommand="$1" 'NR == 1 || $5 ~ command'; }
 
+todo()
+{
+    [[ ! -d ~/.todo ]] && echo "No .todo directory found" && return;
+    cd ~/.todo || return 1 && l=$(ls -1t | head -n1) && t=$(date +%Y%m%d);
+    [[ "$1" == "last" ]] && cp "$l" "$t"; ${EDITOR:-vim} "$t"; cd -;
+}
+
 if command -v markdown > /dev/null; then
     md() { markdown "$1" > "${1%.*}.html"; }
 fi
